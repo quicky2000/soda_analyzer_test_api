@@ -10,7 +10,7 @@ namespace osm_diff_analyzer_test_api
 {
   class common_api;
 
-  class test_api_analyzer:public osm_diff_analyzer_if::sax_analyzer_base
+  class test_api_analyzer:public osm_diff_analyzer_sax_if::sax_analyzer_base
   {
   public:
     test_api_analyzer(const std::string & p_name,common_api * p_api);

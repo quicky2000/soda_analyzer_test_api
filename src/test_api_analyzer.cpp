@@ -10,7 +10,7 @@ namespace osm_diff_analyzer_test_api
 {
   //------------------------------------------------------------------------------
   test_api_analyzer::test_api_analyzer(const std::string & p_name,common_api * p_api):
-    osm_diff_analyzer_if::sax_analyzer_base("user_analyser",p_name,""),
+    osm_diff_analyzer_sax_if::sax_analyzer_base("user_analyser",p_name,""),
     m_api(p_api)
   {
     assert(m_api);
