@@ -2,6 +2,7 @@
 #define _TEST_API_ANALYZER_H_
 
 #include "sax_analyzer_base.h"
+#include "test_api_analyzer_description.h"
 #include "stdint.h"
 #include <map>
 #include <fstream>
@@ -20,9 +21,14 @@ namespace osm_diff_analyzer_test_api
     void start_element(const std::string & p_name);
     void get_attribute(const std::string & p_name,const std::string & p_value);
     void end_element(const std::string & p_name);
+    const std::string & get_input_type(void)const;
+    const std::string & get_output_type(void)const;
+    const std::string & get_type(void)const;
     // End of inherited methods
   private:
     common_api * m_api;
-  };
+    bool m_done;
+     static test_api_analyzer_description m_description;
+ };
 }
 #endif
