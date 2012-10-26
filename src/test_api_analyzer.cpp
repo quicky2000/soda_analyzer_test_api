@@ -9,12 +9,12 @@
 namespace osm_diff_analyzer_test_api
 {
   //------------------------------------------------------------------------------
-  test_api_analyzer::test_api_analyzer(const std::string & p_name,common_api * p_api):
-    osm_diff_analyzer_sax_if::sax_analyzer_base("user_analyser",p_name,""),
+  test_api_analyzer::test_api_analyzer(const osm_diff_analyzer_if::module_configuration * p_conf,common_api & p_api):
+    osm_diff_analyzer_sax_if::sax_analyzer_base("user_analyser",p_conf->get_name(),""),
     m_api(p_api),
     m_done(false)
   {
-    assert(m_api);
+    delete p_conf;
   }
 
   //------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET Node 474827214" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const osm_api_data_types::osm_node * l_node = m_api->get_node(474827214);
+        const osm_api_data_types::osm_node * l_node = m_api.get_node(474827214);
         assert(l_node);
         std::cout << *l_node ; 
         delete l_node;
@@ -42,7 +42,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET Node 474827214 version 1" << std::endl ;
         std::cout << "========================" << std::endl ;
-        l_node = m_api->get_node_version(474827214,1);
+        l_node = m_api.get_node_version(474827214,1);
         assert(l_node);
         std::cout << *l_node ; 
         delete l_node;
@@ -52,7 +52,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET Node 474827214 history" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_node *> * const l_node_history = m_api->get_node_history(474827214);
+        const std::vector<osm_api_data_types::osm_node *> * const l_node_history = m_api.get_node_history(474827214);
         for(std::vector<osm_api_data_types::osm_node *>::const_iterator l_iter = l_node_history->begin();
             l_iter != l_node_history->end();
             ++l_iter)
@@ -68,7 +68,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET ways using Node 1947164927" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_way *> * const l_ways = m_api->get_node_ways(1947164927);
+        const std::vector<osm_api_data_types::osm_way *> * const l_ways = m_api.get_node_ways(1947164927);
         for(std::vector<osm_api_data_types::osm_way *>::const_iterator l_iter = l_ways->begin();
             l_iter != l_ways->end();
             ++l_iter)
@@ -83,7 +83,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET relations using Node 1829038636" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_relation *> * const l_node_relations = m_api->get_node_relations(1829038636);
+        const std::vector<osm_api_data_types::osm_relation *> * const l_node_relations = m_api.get_node_relations(1829038636);
         for(std::vector<osm_api_data_types::osm_relation *>::const_iterator l_iter = l_node_relations->begin();
             l_iter != l_node_relations->end();
             ++l_iter)
@@ -101,7 +101,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET Nodes (344567058,474827214)" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_node*> * l_list_node = m_api->get_nodes(l_node_ids);
+        const std::vector<osm_api_data_types::osm_node*> * l_list_node = m_api.get_nodes(l_node_ids);
         for(std::vector<osm_api_data_types::osm_node*>::const_iterator l_iter = l_list_node->begin();
             l_iter != l_list_node->end();
             ++l_iter)
@@ -116,7 +116,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET way 173118043" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const osm_api_data_types::osm_way * l_way = m_api->get_way(173118043);
+        const osm_api_data_types::osm_way * l_way = m_api.get_way(173118043);
         assert(l_way);
         std::cout << *l_way ; 
         delete l_way;
@@ -126,7 +126,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET way 173118043  version 1" << std::endl ;
         std::cout << "========================" << std::endl ;
-        l_way = m_api->get_way_version(173118043,1);
+        l_way = m_api.get_way_version(173118043,1);
         assert(l_way);
         std::cout << *l_way ; 
         delete l_way;
@@ -136,7 +136,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET Way 173118043 history" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_way *> * const l_way_history = m_api->get_way_history(173118043);
+        const std::vector<osm_api_data_types::osm_way *> * const l_way_history = m_api.get_way_history(173118043);
         for(std::vector<osm_api_data_types::osm_way *>::const_iterator l_iter = l_way_history->begin();
             l_iter != l_way_history->end();
             ++l_iter)
@@ -152,7 +152,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET Relations using Way 184257352" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_relation *> * const l_way_relations = m_api->get_way_relations(184257352);
+        const std::vector<osm_api_data_types::osm_relation *> * const l_way_relations = m_api.get_way_relations(184257352);
         for(std::vector<osm_api_data_types::osm_relation *>::const_iterator l_iter = l_way_relations->begin();
             l_iter != l_way_relations->end();
             ++l_iter)
@@ -169,7 +169,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "GET full Way 173118043" << std::endl ;
         std::cout << "========================" << std::endl ;
         std::vector<osm_api_data_types::osm_node*> l_way_nodes;
-        const osm_api_data_types::osm_way * l_full_way = m_api->get_way_full(173118043,l_way_nodes);
+        const osm_api_data_types::osm_way * l_full_way = m_api.get_way_full(173118043,l_way_nodes);
         assert(l_full_way);
         std::cout << *l_full_way ; 
         for(std::vector<osm_api_data_types::osm_node*>::const_iterator l_iter = l_way_nodes.begin();
@@ -190,7 +190,7 @@ namespace osm_diff_analyzer_test_api
         std::vector<osm_api_data_types::osm_object::t_osm_id> l_way_ids;
         l_way_ids.push_back(173118043);
         l_way_ids.push_back(184257352);
-        const std::vector<osm_api_data_types::osm_way*> * l_list_way = m_api->get_ways(l_way_ids);
+        const std::vector<osm_api_data_types::osm_way*> * l_list_way = m_api.get_ways(l_way_ids);
         for(std::vector<osm_api_data_types::osm_way*>::const_iterator l_iter = l_list_way->begin();
             l_iter != l_list_way->end();
             ++l_iter)
@@ -205,7 +205,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET relation 216546" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const osm_api_data_types::osm_relation * l_relation = m_api->get_relation(216546);
+        const osm_api_data_types::osm_relation * l_relation = m_api.get_relation(216546);
         assert(l_relation);
         std::cout << * l_relation << std::endl ;
         delete l_relation;
@@ -214,7 +214,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET relation 216546 version 1" << std::endl ;
         std::cout << "========================" << std::endl ;
-        l_relation = m_api->get_relation_version(216546,1);
+        l_relation = m_api.get_relation_version(216546,1);
         assert(l_relation);
         std::cout << * l_relation << std::endl ;
         delete l_relation;
@@ -223,7 +223,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET Relation 216546 history" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_relation *> * const l_relation_history = m_api->get_relation_history(216546);
+        const std::vector<osm_api_data_types::osm_relation *> * const l_relation_history = m_api.get_relation_history(216546);
         for(std::vector<osm_api_data_types::osm_relation *>::const_iterator l_iter = l_relation_history->begin();
             l_iter != l_relation_history->end();
             ++l_iter)
@@ -241,7 +241,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::vector<osm_api_data_types::osm_node*> l_relation_nodes;
         std::vector<osm_api_data_types::osm_way*> l_relation_ways;
-        const osm_api_data_types::osm_relation * l_full_relation = m_api->get_relation_full(216546,l_relation_nodes,l_relation_ways);
+        const osm_api_data_types::osm_relation * l_full_relation = m_api.get_relation_full(216546,l_relation_nodes,l_relation_ways);
         assert(l_relation);
         std::cout << * l_full_relation << std::endl ;
         delete l_full_relation;
@@ -268,7 +268,7 @@ namespace osm_diff_analyzer_test_api
         std::vector<osm_api_data_types::osm_object::t_osm_id> l_relation_ids;
         l_relation_ids.push_back(216546);
         l_relation_ids.push_back(191189);
-        const std::vector<osm_api_data_types::osm_relation*> * l_list_relation = m_api->get_relations(l_relation_ids);
+        const std::vector<osm_api_data_types::osm_relation*> * l_list_relation = m_api.get_relations(l_relation_ids);
         for(std::vector<osm_api_data_types::osm_relation*>::const_iterator l_iter = l_list_relation->begin();
             l_iter != l_list_relation->end();
             ++l_iter)
@@ -283,7 +283,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET changeset 13369487" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const osm_api_data_types::osm_changeset * l_changeset = m_api->get_changeset(13369487);
+        const osm_api_data_types::osm_changeset * l_changeset = m_api.get_changeset(13369487);
         assert(l_changeset);
         std::cout << *l_changeset;
         delete l_changeset;
@@ -293,7 +293,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET changeset content 13369487" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_change *> * l_changes = m_api->get_changeset_content(13369487);
+        const std::vector<osm_api_data_types::osm_change *> * l_changes = m_api.get_changeset_content(13369487);
         for(std::vector<osm_api_data_types::osm_change*>::const_iterator l_iter = l_changes->begin();
             l_iter != l_changes->end();
             ++l_iter)
@@ -308,7 +308,7 @@ namespace osm_diff_analyzer_test_api
         std::cout << "========================" << std::endl ;
         std::cout << "GET changesets of quicky since 2012-09-07T14:02:41Z" << std::endl ;
         std::cout << "========================" << std::endl ;
-        const std::vector<osm_api_data_types::osm_changeset*> * l_list_changeset = m_api->get_changesets(osm_api_data_types::osm_bounding_box(),0,"quicky","2012-09-07T14:02:41Z","",false,false);
+        const std::vector<osm_api_data_types::osm_changeset*> * l_list_changeset = m_api.get_changesets(osm_api_data_types::osm_bounding_box(),0,"quicky","2012-09-07T14:02:41Z","",false,false);
         for(std::vector<osm_api_data_types::osm_changeset*>::const_iterator l_iter = l_list_changeset->begin();
             l_iter != l_list_changeset->end();
             ++l_iter)
@@ -326,7 +326,7 @@ namespace osm_diff_analyzer_test_api
         std::vector<osm_api_data_types::osm_node*> l_map_nodes;
         std::vector<osm_api_data_types::osm_way*> l_map_ways;
         std::vector<osm_api_data_types::osm_relation*> l_map_relations;
-        m_api->get_map(osm_api_data_types::osm_bounding_box(5.7076801,45.1925595,5.7112314,45.2000492),l_map_nodes,l_map_ways,l_map_relations);
+        m_api.get_map(osm_api_data_types::osm_bounding_box(5.7076801,45.1925595,5.7112314,45.2000492),l_map_nodes,l_map_ways,l_map_relations);
         for(std::vector<osm_api_data_types::osm_node*>::const_iterator l_iter = l_map_nodes.begin();
             l_iter != l_map_nodes.end();
             ++l_iter)

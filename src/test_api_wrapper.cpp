@@ -27,9 +27,9 @@ namespace osm_diff_analyzer_test_api
   }
 
   //----------------------------------------------------------------------------
-  osm_diff_analyzer_if::general_analyzer_if * test_api_wrapper::create_test_api_analyzer(const std::string & p_name)
+  osm_diff_analyzer_if::general_analyzer_if * test_api_wrapper::create_test_api_analyzer(const osm_diff_analyzer_if::module_configuration * p_conf)
   {
-    return new test_api_analyzer(p_name,m_common_api);
+    return new test_api_analyzer(p_conf,*m_common_api);
   }
 
   //----------------------------------------------------------------------------

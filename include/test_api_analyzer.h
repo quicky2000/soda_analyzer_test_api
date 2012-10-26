@@ -14,7 +14,7 @@ namespace osm_diff_analyzer_test_api
   class test_api_analyzer:public osm_diff_analyzer_sax_if::sax_analyzer_base
   {
   public:
-    test_api_analyzer(const std::string & p_name,common_api * p_api);
+    test_api_analyzer(const osm_diff_analyzer_if::module_configuration * p_conf,common_api & p_api);
     ~test_api_analyzer(void);
     // Methods inherited from sax_analyzer_if
     void init(void);
@@ -26,7 +26,7 @@ namespace osm_diff_analyzer_test_api
     const std::string & get_type(void)const;
     // End of inherited methods
   private:
-    common_api * m_api;
+    common_api & m_api;
     bool m_done;
      static test_api_analyzer_description m_description;
  };
