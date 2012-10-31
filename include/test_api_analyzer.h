@@ -3,7 +3,8 @@
 
 #include "sax_analyzer_base.h"
 #include "test_api_analyzer_description.h"
-#include "stdint.h"
+#include "module_configuration.h"
+#include <stdint.h>
 #include <map>
 #include <fstream>
 
@@ -17,7 +18,7 @@ namespace osm_diff_analyzer_test_api
     test_api_analyzer(const osm_diff_analyzer_if::module_configuration * p_conf,common_api & p_api);
     ~test_api_analyzer(void);
     // Methods inherited from sax_analyzer_if
-    void init(void);
+    void init(const osm_diff_analyzer_if::osm_diff_state * p_diff_state);
     void start_element(const std::string & p_name);
     void get_attribute(const std::string & p_name,const std::string & p_value);
     void end_element(const std::string & p_name);

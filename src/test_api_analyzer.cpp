@@ -14,7 +14,6 @@ namespace osm_diff_analyzer_test_api
     m_api(p_api),
     m_done(false)
   {
-    delete p_conf;
   }
 
   //------------------------------------------------------------------------------
@@ -23,8 +22,9 @@ namespace osm_diff_analyzer_test_api
   }
 
   //------------------------------------------------------------------------------
-  void test_api_analyzer::init(void)
+  void test_api_analyzer::init(const osm_diff_analyzer_if::osm_diff_state * p_diff_state)
   {
+    std::cout << "Starting analyze of diff " << p_diff_state->get_sequence_number() << std::endl ;
     if(!m_done)
       {
         m_done = true;
@@ -45,6 +45,7 @@ namespace osm_diff_analyzer_test_api
         l_node = m_api.get_node_version(474827214,1);
         assert(l_node);
         std::cout << *l_node ; 
+        m_api.cache(*l_node);
         delete l_node;
         std::cout << "------------------------" << std::endl ;
    
@@ -129,6 +130,7 @@ namespace osm_diff_analyzer_test_api
         l_way = m_api.get_way_version(173118043,1);
         assert(l_way);
         std::cout << *l_way ; 
+        m_api.cache(*l_way);
         delete l_way;
         std::cout << "------------------------" << std::endl ;
  
@@ -217,6 +219,7 @@ namespace osm_diff_analyzer_test_api
         l_relation = m_api.get_relation_version(216546,1);
         assert(l_relation);
         std::cout << * l_relation << std::endl ;
+        m_api.cache(*l_relation);
         delete l_relation;
 
         // Get Relation history
