@@ -113,7 +113,8 @@ namespace osm_diff_analyzer_test_api
     inline void cache(const osm_api_data_types::osm_relation & p_relation);
     inline void cache_user(const osm_api_data_types::osm_object::t_osm_id & p_id,
                            const std::string & p_user_name,
-                           const std::string & p_date);
+			   const osm_api_data_types::osm_object::t_osm_id & p_latest_changeset,
+			   const std::string & p_date);
     inline const std::vector<osm_api_data_types::osm_change*> * const get_osm_change_file_content(const std::string & p_file_name);
     inline void get_osm_file_content(const std::string & p_file_name,
 				     std::vector<osm_api_data_types::osm_node*> & p_nodes,
@@ -195,7 +196,7 @@ namespace osm_diff_analyzer_test_api
   //----------------------------------------------------------------------------
   void common_api::get_user_subscription_date(const osm_api_data_types::osm_object::t_osm_id & p_id,
                                               const std::string & p_name,
-                                              std::string & p_date,
+					      std::string & p_date,
                                               void * p_user_data)
   {
     m_get_user_subscription_date(p_id,p_name,p_date,p_user_data);
@@ -373,10 +374,11 @@ namespace osm_diff_analyzer_test_api
   }
   //----------------------------------------------------------------------------
   void common_api::cache_user(const osm_api_data_types::osm_object::t_osm_id & p_id,
-                                      const std::string & p_user_name,
-                                      const std::string & p_date)
+			      const std::string & p_user_name,
+			      const osm_api_data_types::osm_object::t_osm_id & p_latest_changeset,
+			      const std::string & p_date)
   {
-    m_cache_user(p_id,p_user_name,p_date);
+    m_cache_user(p_id,p_user_name,p_latest_changeset,p_date);
   }
   //----------------------------------------------------------------------------
   const std::vector<osm_api_data_types::osm_change*> * const common_api::get_osm_change_file_content(const std::string & p_file_name)
