@@ -24,7 +24,7 @@
 #include "sax_analyzer_base.h"
 #include "test_api_analyzer_description.h"
 #include "module_configuration.h"
-#include <stdint.h>
+#include <inttypes.h>
 #include <map>
 #include <fstream>
 

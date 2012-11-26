@@ -24,7 +24,8 @@
 #include "general_analyzer_if.h"
 #include "module_library_if.h"
 
-#include <stdint.h>
+#include <inttypes.h>
+
 namespace osm_diff_analyzer_test_api
 {
   class common_api;
